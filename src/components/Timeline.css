@@ -1,0 +1,13 @@
+span.vertical-timeline-element-date {
+        color: #06D6A0;
+}
+
+/* @media only screen 
+and (max-device-width: 1000px) {
+    .date{
+        color: black;
+    }
+} */
+#description {
+    font-size: small;   
+}
