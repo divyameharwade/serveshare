@@ -1,12 +1,20 @@
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import VolunteerRegistrationFrom from "./components/forms/VolunteerRegistrationForm";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <Home />
+      {/* <Home /> */}
+      <Routes>
+        <Route
+          path="/newVolunteerRegister"
+          element={<VolunteerRegistrationFrom />}
+        />
+      </Routes>
       <Footer />
     </div>
   );
