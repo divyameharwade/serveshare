@@ -9,10 +9,14 @@ import { Link } from "react-router-dom";
 import Skills from "./Skills";
 import Gallery from "./Gallery";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { useState, useEffect } from "react";
 
 const Home = () => {
   return (
     <div>
+      <Navbar />
       <div className="h-screen  w-full ">
         <div className="relative">
           <img src={background} alt="" className="w-full mx-auto h-screen" />
@@ -62,6 +66,7 @@ const Home = () => {
       <Skills />
 
       <Gallery />
+      <Footer />
     </div>
   );
 };
