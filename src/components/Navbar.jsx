@@ -31,8 +31,14 @@ const Navbar = () => {
       id: 4,
       link: "contact",
     },
+
     {
       id: 5,
+      link: "Partner",
+    },
+
+    {
+      id: 6,
       link: "join us",
       page: "/feed",
       style:
