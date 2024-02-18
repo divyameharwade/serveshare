@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-scroll";
-import { Link } from "react-scroll";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const navigate = useNavigate();
-  const handleClick = () => {
-    setNav(!nav);
+  const handleClick = (page) => {
+    // setNav(!nav);
     console.log("Clicked");
-    navigate("/feed");
+    navigate(page);
   };
 
   const links = [
     {
       id: 1,
       link: "home",
+      page: "/",
     },
     {
       id: 2,
       link: "volunteer",
+      page: "/volunteer",
     },
     {
       id: 3,
       link: "donate",
+      page: "/donate",
     },
     {
       id: 4,
@@ -33,24 +34,27 @@ const Navbar = () => {
     {
       id: 5,
       link: "join us",
+      page: "/feed",
       style:
-        "py-0.5 my-0.5 flex items-center rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 cursor-pointer",
+        "py-0.5 my-0.5 flex items-center rounded-md bg-orange-500 cursor-pointer",
     },
   ];
 
   return (
-    <div className="flex justify-between items-center w-full h-20 px-2 text-white bg-black fixed z-10 ">
+    <div className="flex justify-between items-center w-full h-20  text-white bg-black fixed z-10 pr-10">
       <div>
-        <h1 className="text-3xl md:text-5xl font-signature ml-2">ServeShare</h1>
+        <h1 className="text-5xl md:text-4xl font-signature pl-10">
+          ServeShare
+        </h1>
       </div>
 
       <ul className="hidden md:flex items-center">
-        {links.map(({ id, link, style }) => (
+        {links.map(({ id, link, style, page }) => (
           <li
             key={id}
             className={`px-4 cursor-pointer capitalize font-medium text-white  hover:text-orange-500 hover:scale-105 duration-200 ${style}`}
           >
-            <p onClick={handleClick} smooth duration={500}>
+            <p onClick={() => handleClick(page)} smooth duration={500}>
               {" "}
               {link}{" "}
             </p>
@@ -70,15 +74,15 @@ const Navbar = () => {
 
       {nav && (
         <ul className="flex flex-col top-0 left-0 w-full h-screen justify-center items-center absolute bg-gradient-to-b from-black to-gray-800 text-gray-500">
-          {links.map(({ id, link, style }) => (
+          {links.map(({ id, link, style, page }) => (
             <li
               key={id}
               className="px-4 py-6 capitalize cursor-pointer text-4xl"
             >
-              <p onClick={handleClick} smooth duration={500}>
+              {/* <p onClick={handleClick} smooth duration={500}>
                 {" "}
                 {link}{" "}
-              </p>
+              </p> */}
             </li>
           ))}
         </ul>
