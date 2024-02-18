@@ -5,6 +5,7 @@ import VolunteerRegistrationFrom from "./components/forms/VolunteerRegistrationF
 import { Route, Routes } from "react-router-dom";
 import Cards from "./components/Cards";
 import Feed from "./components/Feed";
+import AddOpportunity from "./components/forms/AddOpportunity";
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
           path="/newVolunteerRegister"
           element={<VolunteerRegistrationFrom />}
         />
-        <Footer />
+        <Route path="/addOpportunity" element={<AddOpportunity />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
