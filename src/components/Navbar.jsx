@@ -34,7 +34,7 @@ const Navbar = () => {
     {
       id: 5,
       link: "join us",
-      page: "/feed",
+      page: "/newVolunteerRegister",
       style:
         "py-0.5 my-0.5 flex items-center rounded-md bg-orange-500 cursor-pointer",
     },

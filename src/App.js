@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Cards from "./components/Cards";
 import Feed from "./components/Feed";
 import AddOpportunity from "./components/forms/AddOpportunity";
+import Filter from "./components/forms/filter";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             element={<VolunteerRegistrationFrom />}
           />
           <Route path="/addOpportunity" element={<AddOpportunity />} />
+          <Route path="/filter" element={<Filter />} />
         </Routes>
       </BrowserRouter>
     </>

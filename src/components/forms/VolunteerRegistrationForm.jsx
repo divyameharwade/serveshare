@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { ref, set, onValue } from "firebase/database";
 import { useLoadScript } from "@react-google-maps/api";
 import { setUserId } from "firebase/analytics";
+import { useNavigate } from "react-router-dom";
 
 export default function VolunteerRegistration() {
   const [email, setEmail] = useState("");
@@ -17,6 +18,10 @@ export default function VolunteerRegistration() {
   const [state, setState] = useState("");
   const [nationalId, setNationalId] = useState("");
   const addressRef = useRef(null);
+  const navigate = useNavigate();
+
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your Google Maps API Key
@@ -42,8 +47,11 @@ export default function VolunteerRegistration() {
         city,
         zipcode,
         state,
-        nationalId
+        nationalId,
+        latitude,
+        longitude
       );
+      navigate("/volunteer");
     } catch (err) {
       console.error(err);
     }
@@ -67,7 +75,9 @@ export default function VolunteerRegistration() {
     city,
     state,
     zipcode,
-    nationalId
+    nationalId,
+    lat,
+    long
   ) => {
     set(ref(database, "users/" + userId), {
       firstname: firstName,
@@ -79,6 +89,8 @@ export default function VolunteerRegistration() {
       state: state,
       zipcode: zipcode,
       nationalId: nationalId,
+      latitude: lat,
+      longitude: long,
     }).catch((error) => {
       console.error(error);
     });
@@ -106,18 +118,35 @@ export default function VolunteerRegistration() {
         { types: ["address"] } // This will only show address suggestions
       );
       // Specify which place data to return
-      autocomplete.setFields(["address_components", "formatted_address"]);
+      autocomplete.setFields([
+        "address_components",
+        "formatted_address",
+        "geometry",
+      ]);
       // Add a listener for the place_changed event
       autocomplete.addListener("place_changed", () => {
         const addressObject = autocomplete.getPlace();
         const formattedAddress = addressObject.formatted_address;
         setStreetAddress(formattedAddress); // Update the address state variable
+
+        if (addressObject.geometry) {
+          // Extract the latitude and longitude from the geometry object
+          const lat = addressObject.geometry.location.lat();
+          const lng = addressObject.geometry.location.lng();
+
+          // Update your state with the new latitude and longitude
+          setLatitude(lat);
+          setLongitude(lng);
+        } else {
+          // Handle case when geometry is not available
+          console.error("Place has no geometry");
+        }
       });
     }
   }, [isLoaded, loadError, addressRef]);
 
   return (
-    <div className="flex justify-center items-center h-full mb-5">
+    <div className="flex justify-center items-center h-full mb-5 mt-5">
       <form
         className="border border-gray-300 rounded-lg p-10 w-full max-w-lg"
         onSubmit={signIn}
@@ -325,7 +354,7 @@ export default function VolunteerRegistration() {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Save
+            Submit
           </button>
         </div>
       </form>
