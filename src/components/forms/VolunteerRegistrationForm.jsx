@@ -18,6 +18,10 @@ export default function VolunteerRegistration() {
   const [nationalId, setNationalId] = useState("");
   const addressRef = useRef(null);
 
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your Google Maps API Key
     libraries: ["places"], // To use the Places API
@@ -42,7 +46,9 @@ export default function VolunteerRegistration() {
         city,
         zipcode,
         state,
-        nationalId
+        nationalId,
+        latitude,
+        longitude
       );
     } catch (err) {
       console.error(err);
@@ -67,7 +73,9 @@ export default function VolunteerRegistration() {
     city,
     state,
     zipcode,
-    nationalId
+    nationalId,
+    lat,
+    long
   ) => {
     set(ref(database, "users/" + userId), {
       firstname: firstName,
@@ -79,6 +87,8 @@ export default function VolunteerRegistration() {
       state: state,
       zipcode: zipcode,
       nationalId: nationalId,
+      latitude: lat,
+      longitude: long
     }).catch((error) => {
       console.error(error);
     });
@@ -106,12 +116,26 @@ export default function VolunteerRegistration() {
         { types: ["address"] } // This will only show address suggestions
       );
       // Specify which place data to return
-      autocomplete.setFields(["address_components", "formatted_address"]);
+      autocomplete.setFields(["address_components", "formatted_address", "geometry"]);
       // Add a listener for the place_changed event
       autocomplete.addListener("place_changed", () => {
         const addressObject = autocomplete.getPlace();
         const formattedAddress = addressObject.formatted_address;
         setStreetAddress(formattedAddress); // Update the address state variable
+
+        if (addressObject.geometry) {
+          // Extract the latitude and longitude from the geometry object
+          const lat = addressObject.geometry.location.lat();
+          const lng = addressObject.geometry.location.lng();
+  
+          // Update your state with the new latitude and longitude
+          setLatitude(lat);
+          setLongitude(lng);
+        } else {
+          // Handle case when geometry is not available
+          console.error("Place has no geometry");
+        }
+
       });
     }
   }, [isLoaded, loadError, addressRef]);
