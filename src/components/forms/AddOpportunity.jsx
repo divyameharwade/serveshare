@@ -44,8 +44,6 @@ export default function AddOpportunity() {
       setOpportunityDuration("");
       setOpportunityDescription("");
       setOpportunityLocation("");
-      //setEventRequirements("");
-      // setLatitude("");
     } catch (err) {
       console.error("Failed to add event:", err);
       alert("Failed to add event. Please try again.");

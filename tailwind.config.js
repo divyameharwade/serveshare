@@ -22,8 +22,11 @@ module.exports = {
           },
         },
       },
+
+      
     },
     fontFamily: {
+      sans: ['Poppins', 'sans-serif'],
       signature: ["Great Vibes"],
     },
   },

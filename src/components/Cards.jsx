@@ -6,19 +6,22 @@ import kids from "../Assets/kids.png";
 
 const Cards = () => {
   const navigate = useNavigate();
-  const handleClick = () => {
+  const handleClickRequest = (page) => {
     console.log("Clicked");
-    navigate("/feed");
+    navigate(page);
   };
   return (
     <div className="">
       <Navbar />
       <div
-        className="grid grid-cols-4 gap-2  w-80% mx-10 pt-20 justify-center text-center"
+        className="grid grid-cols-4 gap-2  w-80% mx-10 pt-32 justify-center text-center"
         style={{ flex: 1 }}
       >
         {/* card1 */}
-        <div className="rounded-lg">
+        <div
+          onClick={() => handleClickRequest("/volunteerpage")}
+          className="rounded-lg"
+        >
           <div className="max-w-sm mx-2 bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="px-2 py-2 bg-taupe">
               <div className="font-bold text-xl mb-2 text-black">

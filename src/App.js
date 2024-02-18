@@ -7,6 +7,7 @@ import Cards from "./components/Cards";
 import Feed from "./components/Feed";
 import AddOpportunity from "./components/forms/AddOpportunity";
 import Filter from "./components/forms/filter";
+import VolunteerPage from "./components/VolunteerPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/volunteer" element={<Cards />} />
           <Route path="/home" element={<Home />} />
           <Route path="/feed" element={<Feed />} />
+          <Route path="/volunteerpage" element={<VolunteerPage />} />
           <Route
             path="/newVolunteerRegister"
             element={<VolunteerRegistrationFrom />}
