@@ -10,7 +10,6 @@ import AddOpportunity from "./components/forms/AddOpportunity";
 function App() {
   return (
     <>
-      <Navbar />s{/* <Home /> */}
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
@@ -24,7 +23,6 @@ function App() {
           <Route path="/addOpportunity" element={<AddOpportunity />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
     </>
   );
 }
