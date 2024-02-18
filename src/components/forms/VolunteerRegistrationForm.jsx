@@ -1,9 +1,127 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { useState, useRef, useEffect } from "react";
+import { auth, database } from "../../config/firebase";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { ref, set, onValue } from "firebase/database";
+import { useLoadScript } from "@react-google-maps/api";
+import { setUserId } from "firebase/analytics";
 
 export default function VolunteerRegistration() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [state, setState] = useState("");
+  const [nationalId, setNationalId] = useState("");
+  const addressRef = useRef(null);
+
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your Google Maps API Key
+    libraries: ["places"], // To use the Places API
+  });
+
+  const signIn = async (e) => {
+    e.preventDefault();
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      writeUserData(
+        userCredential.user.uid,
+        firstName,
+        lastName,
+        email,
+        password,
+        streetAddress,
+        city,
+        zipcode,
+        state,
+        nationalId
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const writeUserData = (
+    userId,
+    firstName,
+    lastName,
+    email,
+    password,
+    streetAddress,
+    city,
+    state,
+    zipcode,
+    nationalId
+  ) => {
+    set(ref(database, "users/" + userId), {
+      firstname: firstName,
+      lastname: lastName,
+      email: email,
+      password: password,
+      streetAddress: streetAddress,
+      city: city,
+      state: state,
+      zipcode: zipcode,
+      nationalId: nationalId,
+    }).catch((error) => {
+      console.error(error);
+    });
+  };
+
+  const readUserData = (userId, callback) => {
+    const userRef = ref(database, "users/" + userId);
+    onValue(
+      userRef,
+      (snapshot) => {
+        const data = snapshot.val();
+        callback(data);
+      },
+      {
+        onlyOnce: true,
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (isLoaded && !loadError && addressRef.current) {
+      // Initialize Google Places Autocomplete with the address input ref
+      const autocomplete = new window.google.maps.places.Autocomplete(
+        addressRef.current,
+        { types: ["address"] } // This will only show address suggestions
+      );
+      // Specify which place data to return
+      autocomplete.setFields(["address_components", "formatted_address"]);
+      // Add a listener for the place_changed event
+      autocomplete.addListener("place_changed", () => {
+        const addressObject = autocomplete.getPlace();
+        const formattedAddress = addressObject.formatted_address;
+        setStreetAddress(formattedAddress); // Update the address state variable
+      });
+    }
+  }, [isLoaded, loadError, addressRef]);
+
   return (
     <div className="flex justify-center items-center h-full mb-5">
-      <form className="border border-gray-300 rounded-lg p-10 w-full max-w-lg">
+      <form
+        className="border border-gray-300 rounded-lg p-10 w-full max-w-lg"
+        onSubmit={signIn}
+      >
         <div className="w-full justify-center space-y-12">
           <div className=" border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -25,7 +143,7 @@ export default function VolunteerRegistration() {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
                 <label
-                  htmlFor="first-name"
+                  htmlFor="firstName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   First name
@@ -33,9 +151,10 @@ export default function VolunteerRegistration() {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="first-name"
-                    id="first-name"
+                    name="firstName"
+                    id="firstName"
                     autoComplete="given-name"
+                    onChange={(e) => setFirstName(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -54,6 +173,7 @@ export default function VolunteerRegistration() {
                     name="last-name"
                     id="last-name"
                     autoComplete="family-name"
+                    onChange={(e) => setLastName(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -72,29 +192,9 @@ export default function VolunteerRegistration() {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    onChange={(e) => setEmail(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="country"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Country
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
-                  </select>
                 </div>
               </div>
 
@@ -108,9 +208,11 @@ export default function VolunteerRegistration() {
                 <div className="mt-2">
                   <input
                     type="text"
+                    ref={addressRef}
                     name="street-address"
                     id="street-address"
                     autoComplete="street-address"
+                    onChange={(e) => setStreetAddress(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -129,6 +231,7 @@ export default function VolunteerRegistration() {
                     name="city"
                     id="city"
                     autoComplete="address-level2"
+                    onChange={(e) => setCity(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -147,6 +250,7 @@ export default function VolunteerRegistration() {
                     name="region"
                     id="region"
                     autoComplete="address-level1"
+                    onChange={(e) => setState(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -165,6 +269,7 @@ export default function VolunteerRegistration() {
                     name="postal-code"
                     id="postal-code"
                     autoComplete="postal-code"
+                    onChange={(e) => setZipcode(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -182,6 +287,25 @@ export default function VolunteerRegistration() {
                     name="id"
                     id="id"
                     autoComplete="off"
+                    onChange={(e) => setNationalId(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="id"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Password
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    autoComplete="off"
+                    onChange={(e) => setPassword(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
