@@ -3,20 +3,22 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Cards from "./components/Cards";
 import Feed from "./components/Feed";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <>
       <Navbar />
-      <Home />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/volunteer" element={<Cards />} />
+          <Route path="/feed" element={<Feed />} />
+        </Routes>
+      </BrowserRouter>
       <Footer />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/Volunteer" element={<Cards />}></Route>
-        <Route path="/Feed" element={<Feed />}></Route>
-      </Routes>
-    </div>
+    </>
   );
 }
 
