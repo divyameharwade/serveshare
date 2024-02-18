@@ -71,7 +71,7 @@ const Skills = () => {
             <div
               onClick={handleClick}
               key={id}
-              className={`shadow-md hover:scale-125 duration-500  py-2 rounded-lg ${style}`}
+              className={`shadow-md hover:scale-125 duration-500  py-2 rounded-2xl ${style}`}
             >
               <img src={src} alt="" className="w-20 h-20 mx-auto" />
               <p className="mt-4 capitalize text-black">{text} </p>

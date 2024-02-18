@@ -41,7 +41,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="flex justify-between items-center w-full h-20  text-white bg-black fixed z-10 pr-10">
+    <div className="flex justify-between items-center w-full h-20  text-white bg-transparent fixed z-10 pr-10">
       <div>
         <h1 className="text-5xl md:text-4xl font-signature pl-10">
           ServeShare
@@ -52,12 +52,9 @@ const Navbar = () => {
         {links.map(({ id, link, style, page }) => (
           <li
             key={id}
-            className={`px-4 cursor-pointer capitalize font-medium text-white  hover:text-orange-500 hover:scale-105 duration-200 ${style}`}
+            className={`px-4 cursor-pointer capitalize font-medium text-orange-500  hover:scale-105 duration-200 ${style}`}
           >
-            <p onClick={() => handleClick(page)} smooth duration={500}>
-              {" "}
-              {link}{" "}
-            </p>
+            <p onClick={() => handleClick(page)}> {link} </p>
             {/* <Link smooth duration={500 onClick={handleClick}}>
               {link}
             </Link> */}
