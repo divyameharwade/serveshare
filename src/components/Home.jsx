@@ -8,6 +8,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Skills from "./Skills";
 import Gallery from "./Gallery";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   return (

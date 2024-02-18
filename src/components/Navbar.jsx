@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-scroll";
 import { Link } from "react-scroll";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    setNav(!nav);
+    console.log("Clicked");
+    navigate("/feed");
+  };
 
   const links = [
     {
@@ -23,28 +31,32 @@ const Navbar = () => {
       link: "contact",
     },
     {
-      id: 4,
-      link: "join",
-      style: "shadow-taupe",
+      id: 5,
+      link: "join us",
+      style:
+        "py-0.5 my-0.5 flex items-center rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 cursor-pointer",
     },
   ];
 
   return (
-    <div className="flex justify-between items-center w-full h-20 px-4 text-white bg-black fixed z-10 ">
+    <div className="flex justify-between items-center w-full h-20 px-2 text-white bg-black fixed z-10 ">
       <div>
         <h1 className="text-3xl md:text-5xl font-signature ml-2">ServeShare</h1>
       </div>
 
-      <ul className="hidden md:flex">
-        {links.map(({ id, link }) => (
+      <ul className="hidden md:flex items-center">
+        {links.map(({ id, link, style }) => (
           <li
             key={id}
-            className="px-4 cursor-pointer capitalize font-medium text-white  hover:text-orange-500 hover:scale-105 duration-200"
+            className={`px-4 cursor-pointer capitalize font-medium text-white  hover:text-orange-500 hover:scale-105 duration-200 ${style}`}
           >
-            <Link to={link} smooth duration={500}>
+            <p onClick={handleClick} smooth duration={500}>
               {" "}
               {link}{" "}
-            </Link>
+            </p>
+            {/* <Link smooth duration={500 onClick={handleClick}}>
+              {link}
+            </Link> */}
           </li>
         ))}
       </ul>
@@ -58,20 +70,15 @@ const Navbar = () => {
 
       {nav && (
         <ul className="flex flex-col top-0 left-0 w-full h-screen justify-center items-center absolute bg-gradient-to-b from-black to-gray-800 text-gray-500">
-          {links.map(({ id, link }) => (
+          {links.map(({ id, link, style }) => (
             <li
               key={id}
               className="px-4 py-6 capitalize cursor-pointer text-4xl"
             >
-              <Link
-                onClick={() => setNav(!nav)}
-                to={link}
-                smooth
-                duration={500}
-              >
+              <p onClick={handleClick} smooth duration={500}>
                 {" "}
                 {link}{" "}
-              </Link>
+              </p>
             </li>
           ))}
         </ul>

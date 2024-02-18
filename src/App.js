@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-      <Navbar />
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
@@ -17,7 +16,6 @@ function App() {
           <Route path="/feed" element={<Feed />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
     </>
   );
 }
