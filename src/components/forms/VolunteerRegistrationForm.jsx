@@ -5,12 +5,9 @@ import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { ref, set, onValue } from "firebase/database";
 import { useLoadScript } from "@react-google-maps/api";
 import { setUserId } from "firebase/analytics";
-<<<<<<< HEAD
-=======
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
->>>>>>> d7afc89 (added VolunteerPage)
 
 export default function VolunteerRegistration() {
   const [email, setEmail] = useState("");
@@ -26,7 +23,6 @@ export default function VolunteerRegistration() {
 
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Replace with your Google Maps API Key
@@ -94,7 +90,7 @@ export default function VolunteerRegistration() {
       zipcode: zipcode,
       nationalId: nationalId,
       latitude: lat,
-      longitude: long
+      longitude: long,
     }).catch((error) => {
       console.error(error);
     });
@@ -122,7 +118,11 @@ export default function VolunteerRegistration() {
         { types: ["address"] } // This will only show address suggestions
       );
       // Specify which place data to return
-      autocomplete.setFields(["address_components", "formatted_address", "geometry"]);
+      autocomplete.setFields([
+        "address_components",
+        "formatted_address",
+        "geometry",
+      ]);
       // Add a listener for the place_changed event
       autocomplete.addListener("place_changed", () => {
         const addressObject = autocomplete.getPlace();
@@ -133,7 +133,7 @@ export default function VolunteerRegistration() {
           // Extract the latitude and longitude from the geometry object
           const lat = addressObject.geometry.location.lat();
           const lng = addressObject.geometry.location.lng();
-  
+
           // Update your state with the new latitude and longitude
           setLatitude(lat);
           setLongitude(lng);
@@ -141,7 +141,6 @@ export default function VolunteerRegistration() {
           // Handle case when geometry is not available
           console.error("Place has no geometry");
         }
-
       });
     }
   }, [isLoaded, loadError, addressRef]);

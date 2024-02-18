@@ -12,38 +12,37 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
-import TypewriterEffect from 'react-typewriter-effect';
+import TypewriterEffect from "react-typewriter-effect";
 
-=======
-import Typewriter from "./Typewriter";
->>>>>>> d7afc89 (added VolunteerPage)
 const Home = () => {
   return (
     <div>
       <Navbar />
       <div className="h-screen  w-full ">
         <div className="relative">
-          <img src={background} alt="" className="w-full mx-auto h-screen opacity-80" />
+          <img
+            src={background}
+            alt=""
+            className="w-full mx-auto h-screen opacity-80"
+          />
           <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="text-white text-center font-bold font-sans">
-            <TypewriterEffect
-              textStyle={{ fontSize: '4.5em' }} // Set the size and other styles as needed
-              startDelay={100}
-              cursorColor="white"
-              multiText={[
-                "1.5 Million NGOs across USA",
-                "Empowering voices, creating opportunities.",
-                "Together we can make a difference.",
-                "Join us in making a change."
-              ]}
-              multiTextDelay={1000}
-              typeSpeed={100}
-              deleteSpeed={50}
-              
-            />
+            <div className="text-white text-center font-bold font-sans">
+              <TypewriterEffect
+                textStyle={{ fontSize: "4.5em" }} // Set the size and other styles as needed
+                startDelay={100}
+                cursorColor="white"
+                multiText={[
+                  "1.5 Million NGOs across USA",
+                  "Empowering voices, creating opportunities.",
+                  "Together we can make a difference.",
+                  "Join us in making a change.",
+                ]}
+                multiTextDelay={1000}
+                typeSpeed={100}
+                deleteSpeed={50}
+              />
+            </div>
           </div>
-        </div>
           <section className="flex relative bottom-40 mx-auto h-80 pb-8 ">
             <div className="container mx-auto">
               <div className="mx-40 flex flex-row">
@@ -54,12 +53,14 @@ const Home = () => {
                         SERVE
                       </h1>
                       <span class="block p-5 font-sans text-white rounded-lg shadow, text-justify">
-                      Serving the community embodies the spirit of empathy and 
-                      solidarity, enabling individuals to connect with and uplift 
-                      those around them through acts of kindness, support, and advocacy. 
-                      It is a powerful way to build stronger, more resilient communities, 
-                      fostering a sense of belonging and mutual respect among diverse groups of people.
-                    </span>
+                        Serving the community embodies the spirit of empathy and
+                        solidarity, enabling individuals to connect with and
+                        uplift those around them through acts of kindness,
+                        support, and advocacy. It is a powerful way to build
+                        stronger, more resilient communities, fostering a sense
+                        of belonging and mutual respect among diverse groups of
+                        people.
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -70,12 +71,14 @@ const Home = () => {
                         SHARE
                       </h1>
                       <span class="block p-5 font-sans text-white rounded-lg shadow, text-justify">
-                      Serving the community embodies the spirit of empathy and 
-                      solidarity, enabling individuals to connect with and uplift 
-                      those around them through acts of kindness, support, and advocacy. 
-                      It is a powerful way to build stronger, more resilient communities, 
-                      fostering a sense of belonging and mutual respect among diverse groups of people.
-                    </span>
+                        Serving the community embodies the spirit of empathy and
+                        solidarity, enabling individuals to connect with and
+                        uplift those around them through acts of kindness,
+                        support, and advocacy. It is a powerful way to build
+                        stronger, more resilient communities, fostering a sense
+                        of belonging and mutual respect among diverse groups of
+                        people.
+                      </span>
                     </div>
                   </div>
                 </div>

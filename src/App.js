@@ -1,10 +1,10 @@
 import Home from "./components/Home";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Cards from "./components/Cards";
 import AddOpportunity from "./components/forms/AddOpportunity";
 import Filter from "./components/forms/filter";
 import VolunteerPage from "./components/VolunteerPage";
+import Cards from "./components/Cards";
+import VolunteerRegistrationFrom from "./components/forms/VolunteerRegistrationForm";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/volunteer" element={<Cards />} />
           <Route path="/volunteerpage" element={<VolunteerPage />} />
           <Route
             path="/newVolunteerRegister"
@@ -20,7 +21,6 @@ function App() {
           />
           <Route path="/addOpportunity" element={<AddOpportunity />} />
           <Route path="/filter" element={<Filter />} />
-          <Route path="/addOpportunity" element={<AddOpportunity />} />
         </Routes>
       </BrowserRouter>
     </>
