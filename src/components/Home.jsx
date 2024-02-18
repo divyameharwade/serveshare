@@ -12,8 +12,12 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useState, useEffect } from "react";
+<<<<<<< HEAD
 import TypewriterEffect from 'react-typewriter-effect';
 
+=======
+import Typewriter from "./Typewriter";
+>>>>>>> d7afc89 (added VolunteerPage)
 const Home = () => {
   return (
     <div>
