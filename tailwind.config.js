@@ -6,6 +6,10 @@ module.exports = {
       animation: {
         text: "text 5s ease infinite",
       },
+      colors: {
+        taupe: "#AB9786",
+        "light-pink": "#F1CED4",
+      },
       keyframes: {
         text: {
           "0%, 100%": {
