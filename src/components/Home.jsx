@@ -5,7 +5,7 @@ import background from "../Assets/background.png";
 import homeless from "../Assets/homeless.png";
 import Cards from "./Cards";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
 import Skills from "./Skills";
 import Gallery from "./Gallery";
 
@@ -59,7 +59,7 @@ const Home = () => {
       </div>
 
       <Skills />
-      {/* <Cards /> */}
+
       <Gallery />
     </div>
   );

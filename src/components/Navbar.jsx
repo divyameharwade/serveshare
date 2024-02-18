@@ -22,10 +22,15 @@ const Navbar = () => {
       id: 4,
       link: "contact",
     },
+    {
+      id: 4,
+      link: "join",
+      style: "shadow-taupe",
+    },
   ];
 
   return (
-    <div className="flex justify-between items-center w-full h-20 px-4 text-white bg-transparent  fixed z-10 ">
+    <div className="flex justify-between items-center w-full h-20 px-4 text-white bg-black fixed z-10 ">
       <div>
         <h1 className="text-3xl md:text-5xl font-signature ml-2">ServeShare</h1>
       </div>
