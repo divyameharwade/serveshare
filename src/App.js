@@ -1,27 +1,28 @@
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import VolunteerRegistrationFrom from "./components/forms/VolunteerRegistrationForm";
+import Cards from "./components/Cards";
+import Feed from "./components/Feed";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Filter from "./components/forms/filter";
-import { Route, Routes } from "react-router-dom";
+
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      {/* <Home /> */}
-      <Routes>
-        <Route
-          path="/newVolunteerRegister"
-          element={<VolunteerRegistrationFrom />}
-        />
-        <Route
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/volunteer" element={<Cards />} />
+          <Route path="/feed" element={<Feed />} />
+          <Route
           path="/filter"
           element={<Filter />}
         />
-      </Routes>
-      <Footer />
-    </div>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
